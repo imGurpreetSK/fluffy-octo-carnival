@@ -1,0 +1,18 @@
+CREATE TABLE Album (
+    albumId INTEGER NOT NULL ,
+    id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    url TEXT NOT NULL,
+    thumbnailUrl TEXT NOT NULL
+);
+
+insertAlbum:
+INSERT INTO Album (albumId, id, title, url, thumbnailUrl)
+VALUES (?, ?, ?, ?, ?);
+
+removeAllAlbums:
+DELETE FROM Album;
+
+selectAllAlbums:
+SELECT Album.*
+FROM Album;
