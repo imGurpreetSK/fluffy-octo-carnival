@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import de.jensklingenberg.ktorfit.gradle.ErrorCheckingMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,13 +6,14 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-    kotlin("plugin.serialization") version libs.versions.kotlin
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.ktorfit)
+    kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_19)
         }
@@ -31,17 +32,6 @@ kotlin {
     }
 
     sourceSets {
-        iosMain.dependencies {
-            implementation(libs.ktor.client.ios)
-            implementation(libs.sqldelight.driver.ios)
-        }
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.ktor.client.okhttp)
-            implementation(libs.koin.android)
-            implementation(libs.sqldelight.driver.android)
-        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -60,6 +50,7 @@ kotlin {
             implementation(libs.ktor.client.serialization)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktorfit)
 
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.sqldelight.runtime)
@@ -67,6 +58,19 @@ kotlin {
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.ios)
+            implementation(libs.sqldelight.driver.ios)
+        }
+
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.koin.android)
+            implementation(libs.sqldelight.driver.android)
         }
     }
 }
@@ -119,4 +123,8 @@ sqldelight {
             packageName.set("com.gurpreetsk.db")
         }
     }
+}
+
+ktorfit {
+    errorCheckingMode = ErrorCheckingMode.ERROR
 }
