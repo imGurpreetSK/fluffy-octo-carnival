@@ -55,6 +55,7 @@ kotlin {
 
             implementation(libs.logger)
 
+            implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.sqldelight.runtime)
 
