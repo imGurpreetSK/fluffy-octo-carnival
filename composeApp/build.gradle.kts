@@ -50,7 +50,10 @@ kotlin {
             implementation(libs.ktor.client.serialization)
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.auth)
             implementation(libs.ktorfit)
+
+            implementation(libs.logger)
 
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.sqldelight.runtime)
@@ -109,6 +112,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
