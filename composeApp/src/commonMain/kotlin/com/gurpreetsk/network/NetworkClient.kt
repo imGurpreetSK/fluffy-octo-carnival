@@ -6,16 +6,21 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
-import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 
-internal object NetworkClient {
+class NetworkClient(
+    private val tokenManager: TokenManager
+) {
     fun get(): HttpClient = HttpClient {
         setupHttpResponseValidator()
 
@@ -43,8 +48,17 @@ internal object NetworkClient {
             )
         }
 
-        // TODO(gs) 6 Feb, 2025 - Setup bearer auth.
-//        install(Auth) {}
+        install(Auth) {
+            bearer {
+                loadTokens {
+                    BearerTokens(tokenManager.getAccessToken(), tokenManager.getRefreshToken())
+                }
+                refreshTokens {
+                    val (accessToken, refreshToken) = tokenManager.fetchNewTokens()
+                    BearerTokens(accessToken, refreshToken)
+                }
+            }
+        }
     }
 
     private fun HttpClientConfig<*>.setupHttpResponseValidator() {
