@@ -7,6 +7,7 @@ import com.gurpreetsk.data.LocalDataSource
 import com.gurpreetsk.data.RemoteDataSource
 import com.gurpreetsk.data.Repository
 import com.gurpreetsk.feature.screen1.Screen1ViewModel
+import com.gurpreetsk.network.di.networkModule
 import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -17,7 +18,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
     modules(
         apiModule,
         repositoryModule,
-        viewModelModule
+        viewModelModule,
+        networkModule
     )
 }
 
