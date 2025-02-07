@@ -18,7 +18,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 
-class NetworkClient(
+internal class NetworkClient(
     private val tokenManager: TokenManager
 ) {
     fun get(): HttpClient = HttpClient {
