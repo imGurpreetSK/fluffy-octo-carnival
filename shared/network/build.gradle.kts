@@ -1,7 +1,12 @@
+import de.jensklingenberg.ktorfit.gradle.ErrorCheckingMode
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.kotlin.binary.compatibility.validator)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.ktorfit)
+    kotlin("plugin.serialization") version libs.versions.kotlin
 }
 
 kotlin {
@@ -108,4 +113,8 @@ kotlin {
     apiValidation {
         apiDumpDirectory = "api"
     }
+}
+
+ktorfit {
+    errorCheckingMode = ErrorCheckingMode.ERROR
 }

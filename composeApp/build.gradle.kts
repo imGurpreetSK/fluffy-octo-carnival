@@ -131,7 +131,3 @@ sqldelight {
         }
     }
 }
-
-ktorfit {
-    errorCheckingMode = ErrorCheckingMode.ERROR
-}
