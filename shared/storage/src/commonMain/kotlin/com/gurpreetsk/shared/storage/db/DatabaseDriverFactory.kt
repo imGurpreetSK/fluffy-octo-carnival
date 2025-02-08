@@ -1,4 +1,4 @@
-package com.gurpreetsk.data
+package com.gurpreetsk.shared.storage.db
 
 import app.cash.sqldelight.db.SqlDriver
 

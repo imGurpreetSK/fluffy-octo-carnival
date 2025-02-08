@@ -1,9 +1,10 @@
-package com.gurpreetsk.data
+package com.gurpreetsk.shared.storage.db
 
 import com.gurpreetsk.db.Album
 import com.gurpreetsk.db.Database
 
 internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
+
     private val database = Database(databaseDriverFactory.createDriver())
     private val dbQuery = database.databaseQueries
 
