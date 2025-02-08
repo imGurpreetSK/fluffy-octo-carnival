@@ -41,6 +41,8 @@ val allModules = listOf(
 )
 
 fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
+    allowOverride(false) // Definition overriding is not allowed.
+
     appDeclaration()
     modules(allModules)
 }
