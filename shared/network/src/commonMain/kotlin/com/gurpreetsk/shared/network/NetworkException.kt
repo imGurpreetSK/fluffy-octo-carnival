@@ -1,4 +1,4 @@
-package com.gurpreetsk.network
+package com.gurpreetsk.shared.network
 
 typealias HttpStatusCode = Int
 

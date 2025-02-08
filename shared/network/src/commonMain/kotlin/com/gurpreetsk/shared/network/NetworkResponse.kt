@@ -1,4 +1,4 @@
-package com.gurpreetsk.network
+package com.gurpreetsk.shared.network
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
