@@ -1,0 +1,11 @@
+public final class com/gurpreetsk/shared/storage/db/StorageModuleKt {
+	public static final fun getStorageModule ()Lorg/koin/core/module/Module;
+}
+
+public final class com/gurpreetsk/shared/storage/di/AndroidStorageModuleKt {
+	public static final fun getAndroidStorageModule ()Lorg/koin/core/module/Module;
+}
+
+public final class com/gurpreetsk/shared/storage/di/IosStorageModuleKt {
+	public static final fun getiOSStorageModule ()Lorg/koin/core/module/Module;
+}

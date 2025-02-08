@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.binary.compatibility.validator)
 }
 
 kotlin {
@@ -98,6 +99,12 @@ kotlin {
                 implementation(libs.sqldelight.driver.ios)
             }
         }
+    }
+
+    apiValidation {
+        apiDumpDirectory = "api"
+
+        ignoredPackages.add("com.gurpreetsk.db")
     }
 }
 
