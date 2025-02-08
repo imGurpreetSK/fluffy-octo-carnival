@@ -66,12 +66,14 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.sqldelight.runtime)
                 implementation(libs.koin.core)
+                implementation(libs.kvstore.core)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.kvstore.test)
             }
         }
 
