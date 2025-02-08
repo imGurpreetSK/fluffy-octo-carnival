@@ -1,14 +1,14 @@
-package com.gurpreetsk.shared.storage.db
+package com.gurpreetsk.data
 
 import com.gurpreetsk.db.Album
-import com.gurpreetsk.db.Database
+import com.gurpreetsk.db.DatabaseQueries
 
-internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
-
-    private val database = Database(databaseDriverFactory.createDriver())
-    private val dbQuery = database.databaseQueries
+internal class AlbumStore(private val dbQuery: DatabaseQueries) {
 
     internal fun getAlbums(): List<Album> {
+        dbQuery.transaction {
+            dbQuery.removeAllAlbums()
+        }
         return dbQuery.selectAllAlbums(::mapAlbumsSelecting).executeAsList()
     }
 

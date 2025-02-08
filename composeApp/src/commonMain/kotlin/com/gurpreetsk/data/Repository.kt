@@ -1,12 +1,8 @@
-package com.gurpreetsk.shared.storage
+package com.gurpreetsk.data
 
 import com.gurpreetsk.db.Album
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class Repository : KoinComponent {
-
-    private val localDataSource: LocalDataSource by inject()
+internal class Repository(private val localDataSource: LocalDataSource) {
 
     fun getAlbums(forceRefresh: Boolean = false): List<Album> {
         val cachedAlbums = localDataSource.getAlbums()
