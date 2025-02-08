@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
@@ -7,6 +9,7 @@ plugins {
 }
 
 kotlin {
+    explicitApi = ExplicitApiMode.Strict
 
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
