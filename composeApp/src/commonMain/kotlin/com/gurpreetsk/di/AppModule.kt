@@ -7,7 +7,7 @@ import com.gurpreetsk.data.LocalDataSource
 import com.gurpreetsk.data.RemoteDataSource
 import com.gurpreetsk.data.Repository
 import com.gurpreetsk.feature.screen1.Screen1ViewModel
-import com.gurpreetsk.network.di.networkModule
+import com.gurpreetsk.shared.network.di.networkModule
 import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration

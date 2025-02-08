@@ -33,6 +33,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.shared.network)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
