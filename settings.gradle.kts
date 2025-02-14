@@ -31,3 +31,4 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":shared:network")
 include(":shared:analytics")
+include(":shared:storage")

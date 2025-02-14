@@ -1,4 +1,3 @@
-import de.jensklingenberg.ktorfit.gradle.ErrorCheckingMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -44,8 +43,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
+            implementation("io.github.alexzhirkevich:cupertino-adaptive:0.1.0-alpha03")
+
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+
+            // TODO(gs) 8 Feb, 2025 - Remove ktorfit and ktor dependencies.
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.json)
             implementation(libs.ktor.client.logging)
@@ -59,16 +62,17 @@ kotlin {
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.sqldelight.runtime)
 
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
         }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
-            implementation(libs.sqldelight.driver.ios)
         }
 
         androidMain.dependencies {
@@ -76,7 +80,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.koin.android)
-            implementation(libs.sqldelight.driver.android)
         }
     }
 }
@@ -122,16 +125,4 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
-}
-
-sqldelight {
-    databases {
-        create("Database") {
-            packageName.set("com.gurpreetsk.db")
-        }
-    }
-}
-
-ktorfit {
-    errorCheckingMode = ErrorCheckingMode.ERROR
 }

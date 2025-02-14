@@ -1,21 +1,21 @@
-import de.jensklingenberg.ktorfit.gradle.ErrorCheckingMode
+import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
-    alias(libs.plugins.kotlin.binary.compatibility.validator)
+    alias(libs.plugins.sqldelight)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.ktorfit)
-    kotlin("plugin.serialization") version libs.versions.kotlin
+    alias(libs.plugins.kotlin.binary.compatibility.validator)
 }
 
 kotlin {
+    explicitApi = ExplicitApiMode.Strict
 
-// Target declarations - add or remove as needed below. These define
-// which platforms this KMP module supports.
-// See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
+    // Target declarations - add or remove as needed below. These define
+    // which platforms this KMP module supports.
+    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.gurpreetsk.shared.network"
+        namespace = "com.gurpreetsk.shared.storage"
         compileSdk = 35
         minSdk = 24
 
@@ -28,14 +28,14 @@ kotlin {
         }
     }
 
-// For iOS targets, this is also where you should
-// configure native binary output. For more information, see:
-// https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
+    // For iOS targets, this is also where you should
+    // configure native binary output. For more information, see:
+    // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
 
-// A step-by-step guide on how to include this library in an XCode
-// project can be found here:
-// https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "shared:networkKit"
+    // A step-by-step guide on how to include this library in an XCode
+    // project can be found here:
+    // https://developer.android.com/kotlin/multiplatform/migrate
+    val xcfName = "shared:storageKit"
 
     iosX64 {
         binaries.framework {
@@ -55,31 +55,25 @@ kotlin {
         }
     }
 
-// Source set declarations.
-// Declaring a target automatically creates a source set with the same name. By default, the
-// Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
-// common to share sources between related targets.
-// See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
+    // Source set declarations.
+    // Declaring a target automatically creates a source set with the same name. By default, the
+    // Kotlin Gradle Plugin creates additional source sets that depend on each other, since it is
+    // common to share sources between related targets.
+    // See: https://kotlinlang.org/docs/multiplatform-hierarchy.html
     sourceSets {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.sqldelight.runtime)
                 implementation(libs.koin.core)
-                implementation(libs.logger)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.json)
-                implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.client.serialization)
-                implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(libs.ktor.client.content.negotiation)
-                implementation(libs.ktor.client.auth)
-                implementation(libs.ktorfit)
+                implementation(libs.kvstore.core)
             }
         }
 
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+                implementation(libs.kvstore.test)
             }
         }
 
@@ -88,6 +82,7 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+                implementation(libs.sqldelight.driver.android)
             }
         }
 
@@ -106,15 +101,22 @@ kotlin {
                 // part of KMP’s default source set hierarchy. Note that this source set depends
                 // on common by default and will correctly pull the iOS artifacts of any
                 // KMP dependencies declared in commonMain.
+                implementation(libs.sqldelight.driver.ios)
             }
         }
     }
 
     apiValidation {
         apiDumpDirectory = "api"
+
+        ignoredPackages.add("com.gurpreetsk.db")
     }
 }
 
-ktorfit {
-    errorCheckingMode = ErrorCheckingMode.ERROR
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.gurpreetsk.db")
+        }
+    }
 }

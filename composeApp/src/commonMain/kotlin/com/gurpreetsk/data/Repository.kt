@@ -1,26 +1,41 @@
 package com.gurpreetsk.data
 
 import com.gurpreetsk.db.Album
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class Repository : KoinComponent {
+internal class Repository(private val localDataSource: LocalDataSource) {
 
-    private val localDataSource: LocalDataSource by inject()
-    private val remoteDataSource: RemoteDataSource by inject()
-
-    suspend fun getAlbums(forceRefresh: Boolean = false): List<Album> {
+    fun getAlbums(forceRefresh: Boolean = false): List<Album> {
         val cachedAlbums = localDataSource.getAlbums()
         return if (cachedAlbums.isNotEmpty() && !forceRefresh) {
             cachedAlbums
         } else {
-            remoteDataSource.getAlbums().map {
-                Album(
-                    id = it.id,
-                    albumId = it.albumId,
-                    title = it.title,
-                    url = it.url,
-                    thumbnailUrl = it.thumbnailUrl
+            buildList {
+                add(
+                    Album(
+                        id = 1,
+                        albumId = 1,
+                        title = "Genshin Impact",
+                        url = "https://google.com",
+                        thumbnailUrl = ""
+                    )
+                )
+                add(
+                    Album(
+                        id = 2,
+                        albumId = 2,
+                        title = "Genshin Impact 2",
+                        url = "https://google.com",
+                        thumbnailUrl = ""
+                    )
+                )
+                add(
+                    Album(
+                        id = 3,
+                        albumId = 3,
+                        title = "Genshin Impact 3",
+                        url = "https://google.com",
+                        thumbnailUrl = ""
+                    )
                 )
             }.also { albums ->
                 localDataSource.saveAlbums(albums)
