@@ -9,6 +9,7 @@ import com.gurpreetsk.data.Repository
 import com.gurpreetsk.feature.screen1.Screen1ViewModel
 import com.gurpreetsk.shared.network.di.networkModule
 import com.gurpreetsk.shared.storage.db.storageModule
+import com.gurpreetsk.shared.storage.kv.di.preferencesManagerModule
 import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -33,6 +34,7 @@ val allModules = listOf(
     // Koin modules provided by core shared modules.
     networkModule,
     storageModule,
+    preferencesManagerModule,
 
     // Feature modules.
     apiModule,
