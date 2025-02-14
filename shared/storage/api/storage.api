@@ -7,5 +7,24 @@ public final class com/gurpreetsk/shared/storage/di/AndroidStorageModuleKt {
 }
 
 public final class com/gurpreetsk/shared/storage/di/IosStorageModuleKt {
-	public static final fun getiOSStorageModule ()Lorg/koin/core/module/Module;
+	public static final fun getIOSStorageModule ()Lorg/koin/core/module/Module;
+}
+
+public abstract interface class com/gurpreetsk/shared/storage/kv/PreferencesManager {
+	public abstract fun getBoolean (Ljava/lang/String;)Ljava/lang/Boolean;
+	public abstract fun getDouble (Ljava/lang/String;)Ljava/lang/Double;
+	public abstract fun getFloat (Ljava/lang/String;)Ljava/lang/Float;
+	public abstract fun getInt (Ljava/lang/String;)Ljava/lang/Integer;
+	public abstract fun getLong (Ljava/lang/String;)Ljava/lang/Long;
+	public abstract fun getString (Ljava/lang/String;)Ljava/lang/String;
+	public abstract fun putBoolean (Ljava/lang/String;Z)V
+	public abstract fun putDouble (Ljava/lang/String;D)V
+	public abstract fun putFloat (Ljava/lang/String;F)V
+	public abstract fun putInt (Ljava/lang/String;I)V
+	public abstract fun putLong (Ljava/lang/String;J)V
+	public abstract fun putString (Ljava/lang/String;Ljava/lang/String;)V
+}
+
+public final class com/gurpreetsk/shared/storage/kv/di/PreferenceManagerModuleKt {
+	public static final fun getPreferencesManagerModule ()Lorg/koin/core/module/Module;
 }
