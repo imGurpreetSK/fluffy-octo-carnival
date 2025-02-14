@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.kotlin.binary.compatibility.validator)
 }
 
 kotlin {
@@ -59,6 +60,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
+                implementation(libs.common.firebase.remoteconfig)
             }
         }
 
@@ -73,6 +75,8 @@ kotlin {
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
+                implementation(project.dependencies.platform(libs.android.firebase.bom))
+                implementation(libs.android.firebase.remoteconfig)
             }
         }
 

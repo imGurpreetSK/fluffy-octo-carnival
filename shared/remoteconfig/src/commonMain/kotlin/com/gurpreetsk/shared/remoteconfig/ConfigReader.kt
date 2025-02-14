@@ -1,24 +1,28 @@
 package com.gurpreetsk.shared.remoteconfig
 
+import com.gurpreetsk.shared.remoteconfig.RemoteConfigKey.BooleanConfigKey
+import com.gurpreetsk.shared.remoteconfig.RemoteConfigKey.DoubleConfigKey
+import com.gurpreetsk.shared.remoteconfig.RemoteConfigKey.LongConfigKey
+import com.gurpreetsk.shared.remoteconfig.RemoteConfigKey.StringConfigKey
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.remoteconfig.remoteConfig
+
 /**
- * Interface for reading remote config values.
+ * Read remote config values. This is currently backed by Firebase Remote Config.
  *
- * Intended API usage: `configReader.read(BooleanConfigKey("feature_is_enabled"))`
+ * Intended API usage: `ConfigReader.read(BooleanConfigKey("feature_is_enabled"))`
  *
  * @param T The type of the value to be read.
  * @see RemoteConfigKey for more info and helper classes.
  */
-interface ConfigReader<T> {
-    fun read(key: RemoteConfigKey<T>, defaultValueOverride: T? = null): T
-}
-
-internal interface PlatformConfigReaderDelegate<T> {
-    fun read(key: RemoteConfigKey<T>, defaultValueOverride: T? = null): T
-}
-
-internal class RemoteConfigReader<T>(
-    private val delegate: PlatformConfigReaderDelegate<T>
-) : ConfigReader<T> {
-    override fun read(key: RemoteConfigKey<T>, defaultValueOverride: T?): T =
-        delegate.read(key, defaultValueOverride)
+object ConfigReader {
+    fun <T> read(key: RemoteConfigKey<T>): T? {
+        val value = Firebase.remoteConfig.getValue(key.name)
+        return when (key) {
+            is BooleanConfigKey -> value.asBoolean()
+            is DoubleConfigKey -> value.asDouble()
+            is LongConfigKey -> value.asLong()
+            is StringConfigKey -> value.asString()
+        } as? T
+    }
 }
