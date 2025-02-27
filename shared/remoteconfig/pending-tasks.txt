@@ -1,0 +1,7 @@
+TODO
+
+1. Firebase project setup pending for both Android and iOS projects
+2. iOS platform dependency for remote config not included yet
+    - https://funkymuse.dev/posts/kmp-firebase
+    - https://github.com/GitLiveApp/firebase-kotlin-sdk
+3. Initialization of Firebase SDK pending

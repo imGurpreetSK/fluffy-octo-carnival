@@ -114,6 +114,8 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
     }
@@ -124,6 +126,8 @@ android {
     }
 
     dependencies {
+        coreLibraryDesugaring(libs.android.desugaring)
+
         debugImplementation(compose.uiTooling)
     }
 }
