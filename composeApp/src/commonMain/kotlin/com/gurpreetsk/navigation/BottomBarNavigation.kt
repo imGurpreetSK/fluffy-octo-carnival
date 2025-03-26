@@ -1,5 +1,9 @@
 package com.gurpreetsk.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -7,14 +11,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.gurpreetsk.discovery.DiscoveryFeedScreen
 import com.gurpreetsk.feature.screen1.Screen1
-import com.gurpreetsk.feature.screen2.Screen2
-import com.gurpreetsk.feature.screen3.Screen3
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -23,15 +27,19 @@ fun HomeScreenNavigation() {
     Scaffold(
         bottomBar = {
             BottomNavigationBar(navController)
-        }
+        },
+        modifier = Modifier
+            .background(MaterialTheme.colors.primary)
+            .windowInsetsPadding(WindowInsets.safeDrawing)
     ) {
         NavigationHost(navController = navController)
     }
 }
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+private fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
+        Screen.Discovery,
         Screen.Screen1,
         Screen.Screen2,
         Screen.Screen3
@@ -74,23 +82,26 @@ fun BottomNavigationBar(navController: NavHostController) {
 }
 
 @Composable
-fun NavigationHost(navController: NavHostController) {
-    NavHost(navController, startDestination = Screen.Screen1.route) {
+private fun NavigationHost(navController: NavHostController) {
+    NavHost(navController, startDestination = Screen.Discovery.route) {
+        composable(Screen.Discovery.route) {
+            DiscoveryFeedScreen()
+        }
         composable(Screen.Screen1.route) {
             Screen1()
         }
         composable(Screen.Screen2.route) {
-            Screen2()
+            Screen1()
         }
         composable(Screen.Screen3.route) {
-            Screen3()
+            Screen1()
         }
     }
 }
 
 @Preview
 @Composable
-fun PreviewHomeScreenNavigation() {
+private fun PreviewHomeScreenNavigation() {
     MaterialTheme {
         HomeScreenNavigation()
     }

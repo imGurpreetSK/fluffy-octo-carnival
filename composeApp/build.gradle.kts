@@ -44,6 +44,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
+            implementation("org.drewcarlson:mobiuskt-core:1.3.0")
+            implementation("org.drewcarlson:mobiuskt-coroutines:1.3.0")
+            implementation("org.drewcarlson:mobiuskt-compose:1.3.0")
+
             implementation("io.github.alexzhirkevich:cupertino-adaptive:0.1.0-alpha03")
 
             implementation(libs.coil.compose)
